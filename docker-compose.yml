@@ -1,0 +1,8 @@
+version: "3.7"
+services:
+  short-url:
+    build: .
+    ports:
+      - 3000:3000
+    environment:
+      - VITE_API_URL = http://short-url-back:5000/api/v1/
