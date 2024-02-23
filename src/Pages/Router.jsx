@@ -1,4 +1,4 @@
-import Home from "./Home/Home.router";
+import Home from "./Home/Home.page";
 import { Route, Routes } from "react-router-dom/dist";
 import HomeLayout from "../Layout/home.layout";
 import NotFound from "./404/404.page";

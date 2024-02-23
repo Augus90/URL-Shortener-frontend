@@ -1,6 +1,23 @@
 import PropTypes from "prop-types";
+import { deleteLink } from "../../utils/hooks/API";
+import { useContext } from "react";
+import { Context } from "../../utils/Store";
 
 const Item = ({ short, full, category }) => {
+  const [state, dispatch] = useContext(Context);
+
+  const handleDelete = async () => {
+    try {
+      await deleteLink(short);
+      dispatch({
+        type: "SET_LIST",
+        payload: state.linkList.filter((item) => item.short !== short),
+      });
+    } catch (err) {
+      console.log("Error deleting link", err);
+    }
+  };
+
   return (
     <li className="group block h-full rounded-lg border border-gray-700 p-4 hover:border-teal-500">
       <div className="flex justify-between">
@@ -30,7 +47,7 @@ const Item = ({ short, full, category }) => {
         </div>
         {/* <strong>{category}</strong> */}
         <div className="relative -right-8 space-x-4 opacity-0 transition-all duration-500 group-hover:right-0 group-hover:opacity-100">
-          <button className="rounded-lg bg-gray-100 px-1 py-1 ">
+          <button id="edit-link" className="rounded-lg bg-gray-100 px-1 py-1 ">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="icon icon-tabler icon-tabler-edit  text-teal-600 hover:text-teal-600/75"
@@ -49,10 +66,14 @@ const Item = ({ short, full, category }) => {
               <path d="M16 5l3 3" />
             </svg>
           </button>
-          <button className="rounded-lg bg-gray-100 px-1 py-1 ">
+          <button
+            id="delete-link"
+            className="rounded-lg bg-gray-100 px-1 py-1 "
+            onClick={handleDelete}
+          >
             <svg
               xmlns="http://www.w3.org/2000/svg"
-              className="icon icon-tabler icon-tabler-trash text-teal-600 hover:text-teal-600/75"
+              className="icon icon-tabler icon-tabler-trash text-teal-600 hover:text-pink-600/75"
               width="32"
               height="32"
               viewBox="0 0 24 24"

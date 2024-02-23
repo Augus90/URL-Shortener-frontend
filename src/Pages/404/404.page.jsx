@@ -1,14 +1,24 @@
-import { Link, Navigate, json, redirect, useParams } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  json,
+  redirect,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import useFetch from "../../utils/hooks/useFetch";
 import { fetchLong } from "../../utils/hooks/API";
 import { useEffect } from "react";
 
 const NotFound = () => {
   const { short } = useParams();
+  const navigate = useNavigate();
   const { data } = useFetch(fetchLong, short);
 
   useEffect(() => {
-    redirect("/");
+    console.log("Data", data);
+    // navigate(data.url, { replace: true });
+    window.location.replace(`${data.url}`);
   }, [data]);
 
   return (

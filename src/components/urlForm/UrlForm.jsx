@@ -1,19 +1,22 @@
-import { useRef } from "react";
-import { useState } from "react";
+import { useContext, useRef } from "react";
 import { postNewLink } from "../../utils/hooks/API";
+import { Context } from "../../utils/Store";
 
 const UrlForm = () => {
-  const [fullURL, setFullURL] = useState();
   const url = useRef();
+  const [state, dispatch] = useContext(Context);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    postNewLink(url.current.value);
+    const newLink = await postNewLink(url.current.value);
+    dispatch({ type: "SHOW_POPUP", payload: !state.showPopup });
+    dispatch({ type: "SET_LIST", payload: [...state.linkList, newLink] });
+    url.current.value = "";
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <div className="flex gap-5">
+      <div className="mb-8 flex gap-5">
         <label
           htmlFor="website-admin"
           className="sr-only mb-2 block text-sm font-medium text-gray-900 dark:text-white"

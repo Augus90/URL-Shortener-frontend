@@ -29,3 +29,15 @@ export const postNewLink = async (url) => {
   console.log(response.data);
   return response.data;
 };
+
+export const deleteLink = async (url) => {
+  const response = await axios
+    .delete(`${baseURL}url`, {
+      data: {
+        shortUrl: url,
+      },
+    })
+    .catch((err) => console.log(err));
+
+  return response.data;
+};

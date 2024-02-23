@@ -1,9 +1,19 @@
-import React from "react";
+import { useContext } from "react";
+import { Context } from "./Store";
 
 const Popup = () => {
+  const [state, dispatch] = useContext(Context);
+
+  const handleClosePopup = () => {
+    dispatch({ type: "SHOW_POPUP", payload: !state.showPopup });
+  };
+
   return (
     <div className="absolute -top-10 w-full rounded-lg border border-gray-200 bg-white shadow-lg">
-      <button className="absolute -end-1 -top-1 rounded-full border border-gray-300 bg-gray-100 p-1">
+      <button
+        className="absolute -end-1 -top-1 rounded-full border border-gray-300 bg-gray-100 p-1"
+        onClick={handleClosePopup}
+      >
         <span className="sr-only">Close</span>
         <svg
           xmlns="http://www.w3.org/2000/svg"
